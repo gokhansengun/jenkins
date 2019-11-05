@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.183
+FROM jenkins/jenkins:2.203
 
 # change user to root to install some tools
 USER root
