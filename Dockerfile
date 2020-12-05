@@ -14,5 +14,5 @@ RUN curl -L -o /usr/bin/aws-iam-authenticator \
     https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.9/2020-08-04/bin/linux/amd64/aws-iam-authenticator && \
     chmod +x /usr/bin/aws-iam-authenticator
 
-# overrite install-plugins
+# overrite install-plugins to limit concurrent downloads
 COPY scripts/install-plugins.sh /usr/local/bin/install-plugins.sh
