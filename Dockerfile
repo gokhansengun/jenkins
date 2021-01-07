@@ -18,4 +18,4 @@ RUN curl -L -o /usr/bin/aws-iam-authenticator \
 COPY scripts/install-plugins.sh /usr/local/bin/install-plugins.sh
 
 # move jenkins-plugin-cli binary in order to use the old plugin download strategy
-COPY mv /bin/jenkins-plugin-cli /bin/jenkins-plugin-cli-moved
+RUN mv /bin/jenkins-plugin-cli /bin/jenkins-plugin-cli-moved
