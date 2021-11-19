@@ -1,4 +1,6 @@
-FROM jenkins/jenkins:2.289.3-lts
+FROM jenkins/jenkins:2.303.3-lts
+
+ENV VELERO_VERSION=1.7.0
 
 # change user to root to install some tools
 USER root
@@ -17,6 +19,11 @@ RUN curl -L https://github.com/mikefarah/yq/releases/download/3.3.2/yq_linux_amd
 RUN curl -L -o /usr/bin/aws-iam-authenticator \
     https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.9/2020-08-04/bin/linux/amd64/aws-iam-authenticator && \
     chmod +x /usr/bin/aws-iam-authenticator
+
+RUN curl -L https://github.com/vmware-tanzu/velero/releases/download/v${VELERO_VERSION}/velero-v${VELERO_VERSION}-linux-amd64.tar.gz -o /tmp/velero-tar.gz && \
+    tar xvf /tmp/velero-tar.gz && \
+    mv velero-v${VELERO_VERSION}-linux-amd64/velero /usr/local/bin && \
+    rm -rf /tmp/velero-tar.gz velero-v${VELERO_VERSION}-linux-amd64
 
 # overrite install-plugins to limit concurrent downloads
 COPY scripts/install-plugins.sh /usr/local/bin/install-plugins.sh
