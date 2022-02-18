@@ -26,6 +26,11 @@ RUN curl -L https://github.com/vmware-tanzu/velero/releases/download/v${VELERO_V
     mv velero-v${VELERO_VERSION}-linux-amd64/velero /usr/local/bin && \
     rm -rf /tmp/velero-tar.gz velero-v${VELERO_VERSION}-linux-amd64
 
+RUN curl -L -o /tmp/vault.zip \
+    https://releases.hashicorp.com/vault/1.9.3/vault_1.9.3_linux_amd64.zip && \
+    cd /tmp && unzip vault.zip && mv vault /usr/bin/ && \
+    rm -rf /tmp/vault.zip
+
 # overrite install-plugins to limit concurrent downloads
 COPY scripts/install-plugins.sh /usr/local/bin/install-plugins.sh
 
