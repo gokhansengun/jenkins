@@ -1,5 +1,5 @@
 # lts with jdk8, starting with 2.303 jdk11 is the default
-FROM jenkins/jenkins:2.319.2-jdk8
+FROM jenkins/jenkins:2.319.3-lts-jdk11
 
 ENV VELERO_VERSION=1.7.0
 
