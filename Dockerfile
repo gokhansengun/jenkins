@@ -1,5 +1,5 @@
 # lts with jdk8, starting with 2.303 jdk11 is the default
-FROM jenkins/jenkins:2.319.3-lts-jdk11
+FROM jenkins/jenkins:2.319.3-lts-jdk8
 
 ENV VELERO_VERSION=1.7.0
 
@@ -12,7 +12,8 @@ RUN pip3 install awscli \
     ansible==2.10.7 \
     openshift==0.12.1 \
     docker==5.0.0 \
-    ansible-modules-hashivault==4.2.3
+    ansible-modules-hashivault==4.2.3 \
+    ansible-galaxy collection install kubernetes.core:==2.2.3
 
 RUN curl -L https://github.com/mikefarah/yq/releases/download/3.3.2/yq_linux_amd64 -o /usr/bin/yq && \
     chmod +x /usr/bin/yq
