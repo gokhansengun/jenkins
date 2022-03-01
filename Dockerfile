@@ -12,7 +12,8 @@ RUN pip3 install awscli \
     ansible==2.10.7 \
     openshift==0.12.1 \
     docker==5.0.0 \
-    ansible-modules-hashivault==4.2.3
+    ansible-modules-hashivault==4.2.3 \
+    dnspython==2.2.0
 
 RUN ansible-galaxy collection install kubernetes.core:==2.2.3
 
