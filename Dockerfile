@@ -1,6 +1,10 @@
 # lts with jdk8, starting with 2.303 jdk11 is the default
 FROM jenkins/jenkins:2.319.3-lts-jdk8
 
+# https://docs.docker.com/engine/reference/builder/#automatic-platform-args-in-the-global-scope
+ARG TARGETARCH
+ARG TARGETOS
+
 ENV VELERO_VERSION=1.7.0
 
 # change user to root to install some tools
@@ -17,20 +21,20 @@ RUN pip3 install awscli \
 
 RUN ansible-galaxy collection install kubernetes.core:==2.2.3
 
-RUN curl -L https://github.com/mikefarah/yq/releases/download/3.3.2/yq_linux_amd64 -o /usr/bin/yq && \
+RUN curl -L https://github.com/mikefarah/yq/releases/download/3.3.2/yq_${TARGETOS}_${TARGETARCH} -o /usr/bin/yq && \
     chmod +x /usr/bin/yq
 
 RUN curl -L -o /usr/bin/aws-iam-authenticator \
-    https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.9/2020-08-04/bin/linux/amd64/aws-iam-authenticator && \
+    https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.9/2020-08-04/bin/${TARGETOS}/${TARGETARCH}/aws-iam-authenticator && \
     chmod +x /usr/bin/aws-iam-authenticator
 
-RUN curl -L https://github.com/vmware-tanzu/velero/releases/download/v${VELERO_VERSION}/velero-v${VELERO_VERSION}-linux-amd64.tar.gz -o /tmp/velero-tar.gz && \
+RUN curl -L https://github.com/vmware-tanzu/velero/releases/download/v${VELERO_VERSION}/velero-v${VELERO_VERSION}-${TARGETOS}-${TARGETARCH}.tar.gz -o /tmp/velero-tar.gz && \
     tar xvf /tmp/velero-tar.gz && \
-    mv velero-v${VELERO_VERSION}-linux-amd64/velero /usr/local/bin && \
-    rm -rf /tmp/velero-tar.gz velero-v${VELERO_VERSION}-linux-amd64
+    mv velero-v${VELERO_VERSION}-${TARGETOS}-${TARGETARCH}/velero /usr/local/bin && \
+    rm -rf /tmp/velero-tar.gz velero-v${VELERO_VERSION}-${TARGETOS}-${TARGETARCH}
 
 RUN curl -L -o /tmp/vault.zip \
-    https://releases.hashicorp.com/vault/1.9.3/vault_1.9.3_linux_amd64.zip && \
+    https://releases.hashicorp.com/vault/1.9.3/vault_1.9.3_${TARGETOS}_${TARGETARCH}.zip && \
     cd /tmp && unzip vault.zip && mv vault /usr/bin/ && \
     rm -rf /tmp/vault.zip
 
