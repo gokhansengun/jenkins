@@ -10,7 +10,7 @@ ENV VELERO_VERSION=1.7.0
 # change user to root to install some tools
 USER root
 RUN apt-get update -y \
- && apt-get install python3-pip python3-venv jq libltdl7 netcat rsync python3-mysqldb -y \
+ && apt-get install python3-pip python3-venv jq libltdl7 netcat sshpass rsync python3-mysqldb -y \
  && apt-get clean -y
 RUN pip3 install awscli \
     ansible==2.10.7 \
