@@ -10,14 +10,16 @@ ENV VELERO_VERSION=1.7.0
 # change user to root to install some tools
 USER root
 RUN apt-get update -y \
- && apt-get install python3-pip python3-venv jq libltdl7 netcat sshpass rsync python3-mysqldb -y \
+ && apt-get install python3-pip python3-venv libpq-dev \
+ && jq libltdl7 netcat sshpass rsync python3-mysqldb -y \
  && apt-get clean -y
 RUN pip3 install awscli \
     ansible==2.10.7 \
     openshift==0.12.1 \
     docker==5.0.0 \
     ansible-modules-hashivault==4.2.3 \
-    dnspython==2.2.0
+    dnspython==2.2.0 \
+    psycopg2==2.9.3
 
 RUN ansible-galaxy collection install kubernetes.core:==2.2.3
 
