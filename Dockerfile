@@ -1,5 +1,5 @@
 # lts with jdk8, starting with 2.303 jdk11 is the default
-FROM jenkins/jenkins:2.319.3-lts-jdk8
+FROM jenkins/jenkins:2.332.1-lts-jdk8
 
 # https://docs.docker.com/engine/reference/builder/#automatic-platform-args-in-the-global-scope
 ARG TARGETARCH
