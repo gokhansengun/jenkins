@@ -1,5 +1,5 @@
 # lts with jdk8, starting with 2.303 jdk11 is the default
-FROM jenkins/jenkins:2.332.1-lts-jdk8
+FROM jenkins/jenkins:2.346.1-lts-jdk8
 
 # https://docs.docker.com/engine/reference/builder/#automatic-platform-args-in-the-global-scope
 ARG TARGETARCH
@@ -10,8 +10,9 @@ ENV VELERO_VERSION=1.7.0
 # change user to root to install some tools
 USER root
 RUN apt-get update -y \
- && apt-get install python3-pip python3-venv libpq-dev jq libltdl7 netcat sshpass rsync python3-mysqldb -y \
- && apt-get clean -y
+  && apt-get install python3-pip python3-venv libpq-dev jq libltdl7 netcat sshpass rsync python3-mysqldb -y \
+  && apt-get install certbot=1.12.0-2 python3-certbot-dns-rfc2136=1.10.1-1 -y \
+  && apt-get clean -y
 RUN pip3 install awscli \
     ansible==2.10.7 \
     openshift==0.12.1 \
@@ -35,7 +36,7 @@ RUN curl -L https://github.com/vmware-tanzu/velero/releases/download/v${VELERO_V
     rm -rf /tmp/velero-tar.gz velero-v${VELERO_VERSION}-${TARGETOS}-${TARGETARCH}
 
 RUN curl -L -o /tmp/vault.zip \
-    https://releases.hashicorp.com/vault/1.9.3/vault_1.9.3_${TARGETOS}_${TARGETARCH}.zip && \
+    https://releases.hashicorp.com/vault/1.11.0/vault_1.11.0_${TARGETOS}_${TARGETARCH}.zip && \
     cd /tmp && unzip vault.zip && mv vault /usr/bin/ && \
     rm -rf /tmp/vault.zip
 
